@@ -464,6 +464,10 @@
         <translation>O anti-cheat não roda no Linux</translation>
     </message>
     <message>
+        <source>Its anti-cheat (%1) has not been confirmed to work on Linux.</source>
+        <translation>Ainda não se confirmou que o anti-cheat (%1) funciona no Linux.</translation>
+    </message>
+    <message>
         <source>No game called “%1” was found.</source>
         <translation>Nenhum jogo chamado “%1” foi encontrado.</translation>
     </message>
@@ -943,6 +947,195 @@
     <message>
         <source>The operation was interrupted.</source>
         <translation>A operação foi interrompida.</translation>
+    </message>
+</context>
+<context>
+    <name>LutrisGameCard</name>
+    <message>
+        <source>Windows game · %1</source>
+        <translation>Jogo de Windows · %1</translation>
+    </message>
+    <message>
+        <source>Windows game</source>
+        <translation>Jogo de Windows</translation>
+    </message>
+    <message>
+        <source>Installed</source>
+        <translation>Instalado</translation>
+    </message>
+    <message>
+        <source>Installing…</source>
+        <translation>Instalando…</translation>
+    </message>
+    <message>
+        <source>Runs with Wine</source>
+        <translation>Roda com Wine</translation>
+    </message>
+</context>
+<context>
+    <name>LutrisGamePage</name>
+    <message>
+        <source>Lutris with extra isolation</source>
+        <translation>Lutris com isolamento extra</translation>
+    </message>
+    <message>
+        <source>Wide access, see below</source>
+        <translation>Acesso amplo, veja abaixo</translation>
+    </message>
+    <message>
+        <source>Isolated, some access</source>
+        <translation>Isolado, com alguns acessos</translation>
+    </message>
+    <message>
+        <source>Isolated from the system</source>
+        <translation>Isolado do sistema</translation>
+    </message>
+    <message>
+        <source>No internet connection</source>
+        <translation>Sem conexão com a internet</translation>
+    </message>
+    <message>
+        <source>This game was not found on Lutris</source>
+        <translation>Este jogo não foi encontrado no Lutris</translation>
+    </message>
+    <message>
+        <source>Lutris did not answer. Try again in a moment.</source>
+        <translation>O Lutris não respondeu. Tente de novo em instantes.</translation>
+    </message>
+    <message>
+        <source>Loading the game…</source>
+        <translation>Carregando o jogo…</translation>
+    </message>
+    <message>
+        <source>Windows game</source>
+        <translation>Jogo de Windows</translation>
+    </message>
+    <message>
+        <source>Runs with Wine</source>
+        <translation>Roda com Wine</translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation>Online</translation>
+    </message>
+    <message>
+        <source>Installed and played with Lutris from Flathub, which runs Windows games through Wine. The install steps are written by the Lutris community, not by the game&apos;s publisher.</source>
+        <translation>Instalado e jogado com o Lutris do Flathub, que roda jogos de Windows com o Wine. Os passos de instalação são escritos pela comunidade do Lutris, não pela empresa do jogo.</translation>
+    </message>
+    <message>
+        <source>Installing Lutris…</source>
+        <translation>Instalando o Lutris…</translation>
+    </message>
+    <message>
+        <source>Waiting to install Lutris…</source>
+        <translation>Aguardando para instalar o Lutris…</translation>
+    </message>
+    <message>
+        <source>Installing with Lutris…</source>
+        <translation>Instalando pelo Lutris…</translation>
+    </message>
+    <message>
+        <source>Continue in the Lutris window. This page changes to Play when the game is ready.</source>
+        <translation>Continue na janela do Lutris. Esta página mostra Jogar quando o jogo estiver pronto.</translation>
+    </message>
+    <message>
+        <source>Stop waiting</source>
+        <translation>Parar de acompanhar</translation>
+    </message>
+    <message>
+        <source>Play</source>
+        <translation>Jogar</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation>Instalar</translation>
+    </message>
+    <message>
+        <source>Install with Lutris</source>
+        <translation>Instalar com o Lutris</translation>
+    </message>
+    <message>
+        <source>Lutris (from Flathub) is installed first.</source>
+        <translation>O Lutris (do Flathub) é instalado antes.</translation>
+    </message>
+    <message>
+        <source>Installed in Lutris</source>
+        <translation>Instalado no Lutris</translation>
+    </message>
+    <message>
+        <source>Online play is blocked on Linux</source>
+        <translation>O jogo online é bloqueado no Linux</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Detalhes</translation>
+    </message>
+    <message>
+        <source>Online game</source>
+        <translation>Jogo online</translation>
+    </message>
+    <message>
+        <source>%1 is played online (%2). Online games may refuse to run under Wine, and some publishers suspend accounts that play with it. Check the game&apos;s rules before playing.</source>
+        <translation>%1 é jogado online (%2). Jogos online podem se recusar a rodar no Wine, e algumas empresas suspendem contas que jogam com ele. Confira as regras do jogo antes de jogar.</translation>
+    </message>
+    <message>
+        <source>Choose the installer</source>
+        <translation>Escolha o instalador</translation>
+    </message>
+    <message>
+        <source>Installer</source>
+        <translation>Instalador</translation>
+    </message>
+    <message>
+        <source>Lutris has no Windows installer for this game yet.</source>
+        <translation>O Lutris ainda não tem um instalador de Windows para este jogo.</translation>
+    </message>
+    <message>
+        <source>By %1 · updated %2</source>
+        <translation>Por %1 · atualizado em %2</translation>
+    </message>
+    <message>
+        <source>By %1</source>
+        <translation>Por %1</translation>
+    </message>
+    <message>
+        <source>What Lutris can access</source>
+        <translation>O que o Lutris pode acessar</translation>
+    </message>
+    <message>
+        <source>Extra isolation for Lutris (recommended)</source>
+        <translation>Isolamento extra para o Lutris (recomendado)</translation>
+    </message>
+    <message>
+        <source>As published on Flathub, Lutris can read and change all your files and start programs outside its sandbox. With this on, the store limits it to the %1 folder and to Downloads (read only), and stops it from starting programs outside the sandbox. Games keep the internet, sound, graphics and controllers. Turn it off only if a game needs another folder.</source>
+        <translation>Do jeito que é publicado no Flathub, o Lutris pode ler e alterar todos os seus arquivos e abrir programas fora da caixa. Com isto ligado, a loja o limita à pasta %1 e à pasta Downloads (só leitura), e o impede de abrir programas fora da caixa. Os jogos continuam com internet, som, vídeo e controles. Desligue só se um jogo precisar de outra pasta.</translation>
+    </message>
+    <message>
+        <source>About this game</source>
+        <translation>Sobre este jogo</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Mostrar menos</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Mostrar mais</translation>
+    </message>
+    <message>
+        <source>See it on lutris.net</source>
+        <translation>Ver no lutris.net</translation>
+    </message>
+</context>
+<context>
+    <name>LutrisSource</name>
+    <message>
+        <source>Lutris could not be started.</source>
+        <translation>Não foi possível abrir o Lutris.</translation>
+    </message>
+    <message>
+        <source>Lutris was closed before the installation finished.</source>
+        <translation>O Lutris foi fechado antes de terminar a instalação.</translation>
     </message>
 </context>
 <context>
@@ -1719,6 +1912,26 @@
         <source>Check the spelling or try another word, like “music” or “photos”.</source>
         <translation>Confira a digitação ou tente outra palavra, como “música” ou “fotos”.</translation>
     </message>
+    <message>
+        <source>Windows games (Lutris)</source>
+        <translation>Jogos de Windows (Lutris)</translation>
+    </message>
+    <message>
+        <source>Installed and played with Lutris from Flathub, through Wine.</source>
+        <translation>Instalados e jogados com o Lutris do Flathub, pelo Wine.</translation>
+    </message>
+    <message>
+        <source>Looking for Windows games on Lutris…</source>
+        <translation>Procurando jogos de Windows no Lutris…</translation>
+    </message>
+    <message>
+        <source>Windows games from Lutris can&apos;t be searched without internet.</source>
+        <translation>Sem internet não dá para procurar jogos de Windows no Lutris.</translation>
+    </message>
+    <message>
+        <source>Lutris did not answer. Try again in a moment.</source>
+        <translation>O Lutris não respondeu. Tente de novo em instantes.</translation>
+    </message>
 </context>
 <context>
     <name>SourceOption</name>
@@ -1752,6 +1965,14 @@
     <message>
         <source>%1 installed</source>
         <translation>%1 instalado</translation>
+    </message>
+    <message>
+        <source>Another installation is running. Try again when it&apos;s done.</source>
+        <translation>Outra instalação está em andamento. Tente de novo quando ela terminar.</translation>
+    </message>
+    <message>
+        <source>Play it from the store or from Lutris.</source>
+        <translation>Jogue pela loja ou pelo Lutris.</translation>
     </message>
     <message>
         <source>Could not install %1</source>

@@ -1,0 +1,52 @@
+[
+ {
+  "url": "https://www.playlostark.com/",
+  "name": "Lost Ark",
+  "logo": "",
+  "native": false,
+  "status": "Running",
+  "reference": "https://www.gamingonlinux.com/2025/07/lost-ark-from-amazon-games-appears-to-have-enabled-the-anti-cheat-for-linux-steamos/",
+  "anticheats": [
+   "Easy Anti-Cheat",
+   "AnyBrain"
+  ],
+  "notes": [
+   [
+    "Proton 10 beta; Proton-GE 10.9 or later recommended.",
+    null
+   ]
+  ],
+  "updates": [],
+  "storeIds": {
+   "steam": "1599340"
+  },
+  "slug": "lost-ark",
+  "dateChanged": "2025-07-17T18:24:43.0000000-04:00"
+ },
+ {
+  "url": "https://leagueoflegends.com",
+  "name": "League of Legends",
+  "logo": "",
+  "native": false,
+  "status": "Denied",
+  "reference": "https://github.com/AreWeAntiCheatYet/AreWeAntiCheatYet/assets/33342705/266b364f-8964-4ae2-9cc4-58e2fd5f9947",
+  "anticheats": [
+   "Vanguard"
+  ],
+  "notes": [
+   [
+    "Possibly playable through a macOS VM",
+    null
+   ]
+  ],
+  "updates": [],
+  "storeIds": {
+   "epic": {
+    "namespace": "24b9b5e323bc40eea252a10cdd3b2f10",
+    "slug": "league-of-legends"
+   }
+  },
+  "slug": "league-of-legends",
+  "dateChanged": "2024-09-16T22:37:00.936Z"
+ }
+]

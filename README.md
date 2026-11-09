@@ -62,6 +62,38 @@ repositories second, the AUR not at all.
   recompilation projects (`nativeGames` in `featured.json`). The store never ships or
   links to game data: entries that need the user's own copy say so and explain how.
 
+- **Windows games (Lutris)** — search results get a section *Jogos de Windows (Lutris)*:
+  Windows games from [lutris.net](https://lutris.net) that have an installer
+  (`/api/games?search=<text>&with-installers=1`, ranked by the store since the API
+  answers in alphabetical order; asked 600 ms after the user stops typing, at most one
+  request a second, backing off after `429`). A game's page
+  (`/api/games/<slug>`: genres, description and installers) offers the published
+  *wine* installers (the one for the user's region preselected, e.g. *Standard (BR)*),
+  a *Roda com Wine* badge, Are We Anti-Cheat Yet's verdict when it blocks Linux, and a
+  warning for online games (MMORPG, MOBA…) that may refuse Wine. Answers and covers are
+  cached in `$XDG_CACHE_HOME/lingmo-store/lutris` (searches and pages a day, covers 30
+  days; stale ones are shown offline). Covers only from `https://lutris.net`.
+  Installing uses the **Flathub build of Lutris** (`net.lutris.Lutris`), never a
+  native `lutris` or its data (`~/.local/share/lutris`, `~/.config/lutris`): when it's
+  missing it is installed first through the normal Flathub path (same consent), its
+  sandbox permissions shown on the game's page. Then `flatpak run net.lutris.Lutris
+  lutris:install/<installer-slug>` opens Lutris' own installer window; the store shows
+  *Instalando pelo Lutris…* and watches that Lutris' library
+  (`~/.var/app/net.lutris.Lutris/data/lutris/pga.db`, read only) until the game is
+  installed (or Lutris is closed), then offers *Jogar*: `flatpak run net.lutris.Lutris
+  lutris:rungame/<slug>`. The first time, the flatpak's own `system.yml` gets
+  `game_path: ~/Games/Lutris`, so its games never land on a native Lutris'
+  `~/Games/<game>`.
+  As published on Flathub, Lutris may read and change the whole home folder and start
+  programs outside its sandbox (`--talk-name=org.freedesktop.Flatpak`), besides
+  `devices=all` and `/media`. *Isolamento extra para o Lutris* (on by default) applies
+  `flatpak override --user --nofilesystem=home --nofilesystem=~/Games
+  --nofilesystem=/media --nofilesystem=/run/media
+  --nofilesystem=~/.var/app/com.valvesoftware.Steam --filesystem=~/Games/Lutris:create
+  --filesystem=xdg-download:ro --no-talk-name=org.freedesktop.Flatpak net.lutris.Lutris`
+  before every install and launch; turning it off runs `flatpak override --user --reset
+  net.lutris.Lutris` (only if the store had applied it).
+
 ## How software is installed
 
 - **Flathub apps**: libflatpak transactions on the **system** installation. The apps
@@ -146,10 +178,21 @@ Values: `1`/`ok`, `fail`, `offline`, `lock`, `cancel`.
 | `LINGMO_STORE_FLATHUB_API=<url>`       | another Flathub API (permissions fallback)      |
 | `LINGMO_STORE_STEAM_DIR=<dir>`         | the Steam folder whose `config/config.vdf` is edited |
 | `LINGMO_STORE_FAKE_STEAM_RUNNING=1\|0` | skip looking for a running Steam                |
+| `LINGMO_STORE_LUTRIS_API=<url>`        | another lutris.net (e.g. a local stub)          |
 
 ```sh
 cp /etc/pacman.conf /tmp/pacman.conf
 LINGMO_STORE_FAKE=1 LINGMO_STORE_PACMAN_CONF=/tmp/pacman.conf lingmo-store --games
+```
+
+In fake mode the Lutris commands are only logged (`[fake] would run flatpak …`) and the
+game counts as installed a few seconds later.
+
+Unit tests (recorded lutris.net answers in `tests/fixtures/lutris`, a fake command
+runner, a scratch HOME; no network, no flatpak):
+
+```sh
+cmake -B build -DBUILD_TESTING=ON && ninja -C build && (cd build && ctest)
 ```
 
 ## License

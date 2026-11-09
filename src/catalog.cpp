@@ -721,6 +721,18 @@ void Catalog::setFakeInstalled(const QString &key, const QString &source, bool i
     Q_EMIT installedChanged();
 }
 
+void Catalog::setFakeFlatpakInstalled(const QString &id, bool installed)
+{
+    if (installed) {
+        m_fakeFlatpak.insert(id, m_flatpak->userInstallation() ? QStringLiteral("user") : QStringLiteral("system"));
+        m_fakeFlatpakRemoved.remove(id);
+    } else {
+        m_fakeFlatpak.remove(id);
+        m_fakeFlatpakRemoved.insert(id);
+    }
+    Q_EMIT installedChanged();
+}
+
 void Catalog::setFakePackageInstalled(const QString &pkgname, bool installed)
 {
     if (installed) {

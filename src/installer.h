@@ -62,6 +62,8 @@ public:
     // source: "arch" or "flathub"
     Q_INVOKABLE bool install(const QString &key, const QString &source);
     Q_INVOKABLE bool remove(const QString &key, const QString &source);
+    // A Flathub app by id, for when the catalog doesn't list it (key "flatpak:<id>")
+    Q_INVOKABLE bool installFlatpak(const QString &id, const QString &name);
     // A package that isn't an AppStream app (native games from [archlingmo])
     Q_INVOKABLE bool installPackage(const QString &pkgname, const QString &name);
     Q_INVOKABLE bool removePackage(const QString &pkgname, const QString &name);

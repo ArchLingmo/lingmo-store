@@ -150,6 +150,7 @@ public:
     // Fake mode: remembers what fake transactions installed or removed
     void setFakeInstalled(const QString &key, const QString &source, bool installed);
     void setFakePackageInstalled(const QString &pkgname, bool installed = true);
+    void setFakeFlatpakInstalled(const QString &id, bool installed);
 
 public Q_SLOTS:
     void reload();

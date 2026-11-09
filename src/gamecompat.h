@@ -55,6 +55,11 @@ public:
     // Downloads (or reads the cached) Are We Anti-Cheat Yet list for blockedGames
     Q_INVOKABLE void loadWatchlist();
     QVariantList blockedGames() const;
+    // Are We Anti-Cheat Yet's entry for a game by name (Lutris games):
+    // {status, anticheats, blocked, url, text}, empty when unknown. Call loadWatchlist() first.
+    Q_INVOKABLE QVariantMap antiCheatStatus(const QString &name) const;
+    // The same verdict from one Are We Anti-Cheat Yet entry (tests)
+    static QVariantMap antiCheatVerdict(const QJsonObject &game);
 
 Q_SIGNALS:
     void changed();

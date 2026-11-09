@@ -121,6 +121,19 @@ LingmoUI.Window {
     }
 
     Connections {
+        target: lutris
+        function onGameFinished(slug, name, ok, message) {
+            const top = stack.currentItem
+            if (top && top.pageName === "lutris" && top.slug === slug)
+                return
+            if (ok)
+                rootWindow.showPassiveNotification(qsTr("%1 is installed").arg(name), 4000)
+            else if (message !== "")
+                rootWindow.showPassiveNotification(message, 6000)
+        }
+    }
+
+    Connections {
         target: store
         function onAppRequested(query) {
             rootWindow.pendingApp = query
@@ -231,6 +244,14 @@ LingmoUI.Window {
         if (top && top.appKey === key)
             return
         stack.push("qrc:/qml/AppPage.qml", { appKey: key })
+    }
+
+    // A Windows game from Lutris (search results)
+    function openLutrisGame(slug) {
+        const top = stack.currentItem
+        if (top && top.pageName === "lutris" && top.slug === slug)
+            return
+        stack.push("qrc:/qml/LutrisGamePage.qml", { slug: slug })
     }
 
     function showSearch(text) {
@@ -524,7 +545,10 @@ LingmoUI.Window {
         acceptText: qsTr("Turn On Flathub")
         rejectText: qsTr("Not Now")
         onAccepted: flatpak.addFlathub()
-        onRejected: rootWindow.consentKey = ""
+        onRejected: {
+            rootWindow.consentKey = ""
+            lutris.cancelPending()
+        }
     }
 
     // Craft apps come from [archlingmo-craft], added to pacman.conf on demand

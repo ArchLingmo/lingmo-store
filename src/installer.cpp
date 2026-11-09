@@ -80,6 +80,8 @@ void Installer::end(bool ok, const QString &message)
         for (const QString &pkg : key.mid(4).split(QLatin1Char(','), Qt::SkipEmptyParts))
             m_catalog->setFakePackageInstalled(pkg, action == QLatin1String("install"));
     }
+    else if (ok && fakeMode() && key.startsWith(QLatin1String("flatpak:")))
+        m_catalog->setFakeFlatpakInstalled(key.mid(8), action == QLatin1String("install"));
     else if (ok && fakeMode() && action != QLatin1String("gaming"))
         m_catalog->setFakeInstalled(key, source, action == QLatin1String("install"));
     m_action.clear();
@@ -115,6 +117,8 @@ bool Installer::install(const QString &key, const QString &source)
     if (busy())
         return false;
     const AppEntry *app = m_catalog->entry(key);
+    if (!app && source == QLatin1String("flathub") && key.startsWith(QLatin1String("flatpak:")))
+        return installFlatpak(key.mid(8), key.mid(8).section(QLatin1Char('.'), -1));
     if (!app)
         return false;
     if (source == QLatin1String("flathub")) {
@@ -136,6 +140,22 @@ bool Installer::install(const QString &key, const QString &source)
         return needsRepo(app->arch->needsRepo, key, {app->arch->pkgname}, app->name);
     begin(key, source, QStringLiteral("install"), app->name);
     runHelper({QStringLiteral("install"), app->arch->pkgname});
+    return true;
+}
+
+bool Installer::installFlatpak(const QString &id, const QString &name)
+{
+    if (busy() || id.isEmpty())
+        return false;
+    const QString key = QStringLiteral("flatpak:") + id;
+    if (m_flatpak->state() == FlatpakBackend::NoRemote || m_flatpak->state() == FlatpakBackend::AddingRemote) {
+        Q_EMIT flathubConsentNeeded(key);
+        return false;
+    }
+    begin(key, QStringLiteral("flathub"), QStringLiteral("install"), name);
+    m_status = tr("Preparing…");
+    Q_EMIT progressChanged();
+    m_flatpak->install(id);
     return true;
 }
 

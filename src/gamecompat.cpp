@@ -457,3 +457,44 @@ QVariantList GameCompat::blockedGames() const
     }
     return list;
 }
+
+QVariantMap GameCompat::antiCheatVerdict(const QJsonObject &game)
+{
+    if (game.isEmpty())
+        return {};
+    const QString status = game.value(QStringLiteral("status")).toString();
+    QStringList engines;
+    for (const QJsonValue &e : game.value(QStringLiteral("anticheats")).toArray())
+        engines << e.toString();
+    const bool blocked = status == QLatin1String("Denied") || status == QLatin1String("Broken");
+    QString text;
+    if (status == QLatin1String("Denied"))
+        text = tr("The developer blocks Linux players in its anti-cheat (%1).").arg(engines.join(QStringLiteral(", ")));
+    else if (status == QLatin1String("Broken"))
+        text = tr("Its anti-cheat (%1) does not work on Linux, so online play is blocked.").arg(engines.join(QStringLiteral(", ")));
+    else if (status == QLatin1String("Supported") || status == QLatin1String("Running"))
+        text = engines.isEmpty() ? QString() : tr("Its anti-cheat works on Linux.");
+    else
+        text = tr("Its anti-cheat (%1) has not been confirmed to work on Linux.").arg(engines.join(QStringLiteral(", ")));
+    return {
+        {QStringLiteral("status"), status},
+        {QStringLiteral("anticheats"), engines.join(QStringLiteral(", "))},
+        {QStringLiteral("blocked"), blocked},
+        {QStringLiteral("text"), text},
+        {QStringLiteral("url"), QStringLiteral("https://areweanticheatyet.com/game/%1")
+                                    .arg(game.value(QStringLiteral("slug")).toString())},
+    };
+}
+
+QVariantMap GameCompat::antiCheatStatus(const QString &name) const
+{
+    const QString wanted = foldName(name);
+    if (wanted.isEmpty())
+        return {};
+    for (const QJsonValue &v : m_antiCheat) {
+        const QJsonObject game = v.toObject();
+        if (foldName(game.value(QStringLiteral("name")).toString()) == wanted)
+            return antiCheatVerdict(game);
+    }
+    return {};
+}

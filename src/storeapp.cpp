@@ -24,6 +24,7 @@
 #include "gamesmanager.h"
 #include "imageproviders.h"
 #include "installer.h"
+#include "lutrissource.h"
 #include "permissions.h"
 #include "reviews.h"
 
@@ -126,10 +127,44 @@ StoreApp::StoreApp(QObject *parent)
     , m_compat(new GameCompat(this))
     , m_reviews(new Reviews(m_catalog, m_fake, this))
     , m_permissions(new Permissions(m_flatpak->userInstallation(), this))
+    , m_lutris(new LutrisSource(this))
 {
     if (m_fake)
         qInfo("LINGMO_STORE_FAKE is set: nothing will be installed or removed for real");
     connect(m_installer, &Installer::finished, this, &StoreApp::onFinished);
+
+    // Lutris games: the Flathub build of Lutris, installed through the usual Flatpak path
+    m_lutris->setLutrisInstalledCheck([this] { return m_catalog->isFlatpakInstalled(QLatin1String(LutrisSource::FlatpakId)); });
+    connect(m_catalog, &Catalog::installedChanged, m_lutris, &LutrisSource::installedStateChanged);
+    connect(m_lutris, &LutrisSource::lutrisInstallNeeded, this, [this] {
+        const QString id = QLatin1String(LutrisSource::FlatpakId);
+        const QString key = m_catalog->resolve(id);
+        const AppEntry *app = m_catalog->entry(key);
+        m_lutrisKey = app && app->flathub ? key : QStringLiteral("flatpak:") + id;
+        const bool consent = m_flatpak->state() == FlatpakBackend::NoRemote || m_flatpak->state() == FlatpakBackend::AddingRemote;
+        const bool started = app && app->flathub ? m_installer->install(key, QStringLiteral("flathub"))
+                                                 : m_installer->installFlatpak(id, QStringLiteral("Lutris"));
+        if (!started && !consent) {
+            m_lutrisKey.clear();
+            m_lutris->lutrisInstallFinished(false, tr("Another installation is running. Try again when it's done."));
+        }
+    });
+    connect(m_installer, &Installer::finished, this,
+            [this](const QString &key, const QString &, const QString &action, bool ok, const QString &message) {
+                if (m_lutrisKey.isEmpty() || key != m_lutrisKey || action != QLatin1String("install"))
+                    return;
+                m_lutrisKey.clear();
+                m_lutris->lutrisInstallFinished(ok, message);
+            });
+    connect(m_lutris, &LutrisSource::gameFinished, this,
+            [this](const QString &, const QString &name, bool ok, const QString &message) {
+                if (m_window && m_window->isActive())
+                    return;
+                if (ok)
+                    notify(tr("%1 installed").arg(name), tr("Play it from the store or from Lutris."));
+                else if (!message.isEmpty())
+                    notify(tr("Could not install %1").arg(name), message);
+            });
     m_flatpak->probe();
     m_catalog->reload();
     m_games->detect();
@@ -161,6 +196,7 @@ void StoreApp::show()
         ctx->setContextProperty(QStringLiteral("compat"), m_compat);
         ctx->setContextProperty(QStringLiteral("reviews"), m_reviews);
         ctx->setContextProperty(QStringLiteral("permissions"), m_permissions);
+        ctx->setContextProperty(QStringLiteral("lutris"), m_lutris);
         ctx->setContextProperty(QStringLiteral("fixedFontFamily"), fixedFontFamily());
         m_engine->load(QUrl(QStringLiteral("qrc:/qml/Main.qml")));
         if (m_engine->rootObjects().isEmpty()) {
@@ -321,7 +357,7 @@ void StoreApp::onFinished(const QString &key, const QString &, const QString &ac
     if (m_window && m_window->isActive())
         return;
     const AppEntry *app = m_catalog->entry(key);
-    const QString name = app ? app->name : QString();
+    const QString name = app ? app->name : key.startsWith(QLatin1String("flatpak:")) ? key.section(QLatin1Char('.'), -1) : QString();
     if (action == QLatin1String("gaming")) {
         notify(ok ? tr("Ready for games") : tr("Could not prepare for games"),
                ok ? tr("Steam and the drivers are installed.") : message);

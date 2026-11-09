@@ -30,6 +30,7 @@ LingmoUI.Card {
     property var app: ({})
     property var info: ({})         // permissions.forApp() for Flathub apps
     property bool showAll: false
+    property string title: qsTr("What this app can access")
 
     readonly property string repo: app.arch ? (app.arch.repo || "") : ""
     readonly property bool officialRepo: ["core", "extra", "multilib", "core-testing", "extra-testing",
@@ -66,7 +67,7 @@ LingmoUI.Card {
         spacing: LingmoUI.Units.largeSpacing
 
         Label {
-            text: qsTr("What this app can access")
+            text: control.title
             font.bold: true
             font.pointSize: LingmoUI.Units.fontSubheading
             color: LingmoUI.Theme.textColor

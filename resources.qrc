@@ -14,6 +14,9 @@
         <file alias="qml/HomePage.qml">qml/HomePage.qml</file>
         <file alias="qml/InstalledPage.qml">qml/InstalledPage.qml</file>
         <file alias="qml/LogView.qml">qml/LogView.qml</file>
+        <file alias="qml/LutrisCover.qml">qml/LutrisCover.qml</file>
+        <file alias="qml/LutrisGameCard.qml">qml/LutrisGameCard.qml</file>
+        <file alias="qml/LutrisGamePage.qml">qml/LutrisGamePage.qml</file>
         <file alias="qml/Main.qml">qml/Main.qml</file>
         <file alias="qml/NativeGameCard.qml">qml/NativeGameCard.qml</file>
         <file alias="qml/NativeGamesPage.qml">qml/NativeGamesPage.qml</file>

@@ -28,6 +28,7 @@ class FlatpakBackend;
 class GameCompat;
 class GamesManager;
 class Installer;
+class LutrisSource;
 class Permissions;
 class Reviews;
 class QQmlApplicationEngine;
@@ -93,6 +94,8 @@ private:
     GameCompat *m_compat;
     Reviews *m_reviews;
     Permissions *m_permissions;
+    LutrisSource *m_lutris;
+    QString m_lutrisKey; // the installer key of the Lutris flatpak while it's being installed for a game
     QQmlApplicationEngine *m_engine = nullptr;
     QPointer<QQuickWindow> m_window;
     StoreRequest m_pending;
